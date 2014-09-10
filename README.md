@@ -1,10 +1,7 @@
 #Redrock Management System
 
-===
-
 ##CURD Module
 
-===
 Without coding, you can using Redrock Management System to create a CURD Module using which we can manage(CURD) any existing Database table.
 
 - Relation Management
