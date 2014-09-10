@@ -1,0 +1,83 @@
+<include file="Public/header" />
+<div id="content">
+    <div id="main">
+<include file="Public/sidebar"/>
+        <div id="monitor" class="inside">
+            <present name="currentContent">
+                <span class="grey_button">编辑内容</span><br/><br/>
+            <else/>
+                <span class="grey_button">添加内容</span><br/><br/>
+            </present>
+            <form action="{:U('Index/addSubmit')}&tb={$Think.get.tb}" method="post" style="text-align: center">
+            <table>
+            <volist id="vo" name="tableContent">
+                <tr>
+                <if condition="$vo.table_editable eq 1">
+                    <switch name="vo['tag_type_name']">
+
+                        <case value="text">
+                            <th>{$vo.table_realname}:</th>
+                            <th><input type="text" name="{$vo.table_name}" value="{$currentContent[$vo['table_name']]}"/></th>
+                            <th>
+                                <if condition="$vo.table_must eq 1">(必填)</if>
+                            </th>
+                        </case>
+
+                        <case value="textarea">
+                            <th>{$vo.table_realname}:</th>
+                            <th><textarea name="{$vo.table_name}">{$currentContent[$vo['table_name']]}</textarea></th>
+                            <th>
+                                <if condition="$vo.table_must eq 1">(必填)</if>
+                            </th>
+                        </case>
+
+                        <!--todo-->
+                        <case value="a">
+                            <th>{$vo.table_realname}:</th>
+                            <th><a href=""></a>{$currentContent[$vo['table_other']]}</th>
+                            <th>
+                                <if condition="$vo.table_must eq 1">(必填)</if>
+                            </th>
+                        </case>
+
+                        <case value="type">
+                            <th>{$vo.table_realname}:</th>
+                            <assign name="tableName" value="$vo.table_name" />
+                            <!--<assign name="tb" value="$Think.get.tb|getTableId"/>-->
+
+                            <th><select name="{$tableName}">
+                                <volist id="opt" name="tempContent[$tableName]">
+                                    <assign name="realFieldValuet"
+                                            value="$relationMap[$tableName]"/>
+
+                                    <assign name="realFieldValue"
+                                            value="$realFieldValuet.real_field"/>
+                                    <assign name="otherField"
+                                            value="$realFieldValuet.other_field"/>
+
+                                    <if condition="$currentContent[$tableName] eq $opt[$otherField]">
+                                        <option value="{$opt.$otherField}" selected="selected">
+                                            {$opt.$realFieldValue}
+                                        </option>
+                                    <else/>
+                                        <option value="{$opt.$otherField}">
+                                            {$opt.$realFieldValue}
+                                        </option>
+                                    </if>
+                                </volist>
+                            </select></th>
+                            <th>
+                                <if condition="$vo.table_must eq 1">(必填)</if>
+                            </th>
+                        </case>
+                    </switch>
+                </if>
+                </tr>
+            </volist>
+            </table>
+                <br/>
+                <input type="submit" name="submit" class="red_button button_float"/>
+            </form>
+        </div>
+
+<include file="Public/footer"/>

@@ -1,0 +1,18 @@
+<div id="sub_nav">
+    <ul id="accordion">
+        <volist id="vo" name="nav" key="k">
+            <li class="sub_button <if condition='$k eq $firstSub'>sub_first</if>">
+                <a href="javascript:;">
+                    <img src="__PUBLIC__/img/topic.png" alt=""/>{$vo.nav_name}
+                </a>
+            </li>
+            <ul class="dropdown">
+                <volist id="son" name="vo['son']" key="kk">
+                    <li <if condition="$kk eq $firstSon">class="on"</if>>
+                        <a href="{:U("$son[nav_controller]/$son[nav_function]")}">{$son.nav_name}</a>
+                    </li>
+                </volist>
+            </ul>
+        </volist>
+    </ul>
+</div>
